@@ -1,0 +1,16 @@
+{
+  "type": "record",
+  "name": "PolicyEvent",
+  "namespace": "se.lf.dslsak.domain.insurance.policy.events",
+  "fields": [
+    {"name": "eventId", "type": "string"},
+    {"name": "eventType", "type": "string"},
+    {"name": "timestamp", "type": "long"},
+    {"name": "policyId", "type": "string"},
+    {"name": "policyNumber", "type": "string"},
+    {"name": "policyHolder", "type": "string"},
+    {"name": "effectiveDate", "type": "long"},
+    {"name": "expirationDate", "type": "long"},
+    {"name": "status", "type": "string"}
+  ]
+} 

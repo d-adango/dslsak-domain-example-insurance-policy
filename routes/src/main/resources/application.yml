@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: insurance-policy-service
+  main:
+    allow-bean-definition-overriding: true
+
+camel:
+  springboot:
+    name: insurance-policy-routes
+  component:
+    kafka:
+      brokers: ${kafka.bootstrap-servers}
+  rest:
+    component: servlet
+    binding-mode: json
+
+kafka:
+  bootstrap-servers: localhost:9092
+  schema-registry:
+    url: http://localhost:8081
+  topics:
+    source: source-policy-topic
+    domain: policy-domain-topic
+    error: policy-error-topic
+  producer:
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+  consumer:
+    group-id: policy-consumer-group
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+    auto-offset-reset: earliest
+
+server:
+  port: 8080
+
+logging:
+  level:
+    se.lf.dslsak: DEBUG
+    org.apache.camel: DEBUG
+    org.springframework: INFO 

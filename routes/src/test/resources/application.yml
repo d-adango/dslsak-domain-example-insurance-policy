@@ -1,0 +1,29 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+logging:
+  level:
+    se.lf.dslsak: DEBUG
+    org.apache.camel: DEBUG
+    org.springframework: INFO
+
+kafka:
+  bootstrap-servers: localhost:9092
+  schema-registry:
+    url: http://localhost:8081
+  producer:
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+  consumer:
+    group-id: policy-consumer-group
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+    auto-offset-reset: earliest
+
+camel:
+  springboot:
+    name: policy-service
+  rest:
+    component: servlet
+    binding-mode: json 
