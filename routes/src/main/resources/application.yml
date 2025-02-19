@@ -38,4 +38,13 @@ logging:
   level:
     se.lf.dslsak: DEBUG
     org.apache.camel: DEBUG
-    org.springframework: INFO 
+    org.springframework: INFO
+
+platform:
+  exception:
+    handling:
+      enabled: true
+      include-stacktrace: never
+      error-response:
+        include-message: always
+        include-binding-errors: always 

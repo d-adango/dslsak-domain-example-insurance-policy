@@ -1,11 +1,16 @@
 package se.lf.dslsak.domain.insurance.policy.model;
 
+
 import lombok.Builder;
-import lombok.Value;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import java.time.LocalDate;
 
-@Value
+@Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Policy {
     String policyId;
     String policyNumber;

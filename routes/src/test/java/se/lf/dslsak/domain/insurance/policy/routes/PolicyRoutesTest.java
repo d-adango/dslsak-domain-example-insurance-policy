@@ -5,77 +5,43 @@ import org.apache.camel.test.spring.junit5.CamelSpringBootTest;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import se.lf.dslsak.domain.insurance.policy.PolicyApplication;
-import se.lf.dslsak.domain.insurance.policy.model.Policy;
+import se.lf.dslsak.domain.insurance.policy.model.Policy; 
 import se.lf.dslsak.domain.insurance.policy.ports.PolicyRepository;
+import se.lf.dslsak.platform.core.observability.metrics.MetricsService;
 
 import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.when;
 
 @CamelSpringBootTest
-@SpringBootTest
-@ContextConfiguration(classes = {PolicyApplication.class, PolicyRoutesTest.TestConfig.class})
+@ContextConfiguration(classes = {PolicyApplication.class})
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PolicyRoutesTest {
     private static final Logger log = LoggerFactory.getLogger(PolicyRoutesTest.class);
 
-    @Configuration
-    @ComponentScan(basePackages = {
-        "se.lf.dslsak.domain.insurance.policy",
-        "se.lf.dslsak.domain.insurance.policy.routes"
-    })
-    static class TestConfig {
-        @Bean
-        @Primary
-        public PolicyRepository testRepository() {
-            log.debug("Creating test repository bean");
-            return new TestPolicyRepository();
-        }
-    }
+    @MockBean
+    private MetricsService metricsService;
 
-    static class TestPolicyRepository implements PolicyRepository {
-        private static final Logger log = LoggerFactory.getLogger(TestPolicyRepository.class);
-        private final Policy testPolicy = createTestPolicy("test-id");
+    @MockBean
+    private PolicyRepository testRepository;
 
-        @Override
-        public Optional<Policy> findById(String id) {
-            log.debug("Finding policy by ID: {}", id);
-            return Optional.of(testPolicy);
-        }
-
-        @Override
-        public Policy save(Policy policy) {
-            log.debug("Saving policy: {}", policy);
-            return policy;
-        }
-
-        @Override
-        public Policy findByPolicyNumber(String policyNumber) {
-            log.debug("Finding policy by number: {}", policyNumber);
-            return testPolicy;
-        }
-
-        @Override
-        public void delete(String id) {
-            log.debug("Deleting policy with ID: {}", id);
-        }
-    }
-
-    @Autowired
+    @javax.annotation.Resource
     private ProducerTemplate producerTemplate;
 
     @Test
     void shouldGetPolicyById() {
         log.debug("Starting test: shouldGetPolicyById");
+        
+        // Given
+        Policy testPolicy = createTestPolicy("test-id");
+        when(testRepository.findById("test-id")).thenReturn(Optional.of(testPolicy));
         
         // When
         log.debug("Sending request to direct:get-policy");
@@ -85,8 +51,8 @@ class PolicyRoutesTest {
         log.debug("Received result: {}", result);
         assertNotNull(result, "Policy should not be null");
         assertEquals("test-id", result.getPolicyId(), "Policy ID should match");
-        assertEquals("POL-001", result.getPolicyNumber(), "Policy number should match");
-        assertEquals("John Doe", result.getPolicyHolder(), "Policy holder should match");
+        assertEquals("POL-001", result.getPolicy_Nummer(), "Policy number should match");
+        assertEquals("John Doe", result.getPolicy_Innehavare(), "Policy holder should match");
         assertEquals("ACTIVE", result.getStatus(), "Status should match");
         
         log.debug("Test completed successfully");

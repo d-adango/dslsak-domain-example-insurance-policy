@@ -9,48 +9,84 @@
         <artifactId>dslsak-domain-example-insurance-policy</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-
+    
+    <properties>
+        <dslsak.platform.version>1.0.0-SNAPSHOT</dslsak.platform.version>
+    </properties>
+    
     <artifactId>dslsak-domain-example-insurance-policy-application</artifactId>
     <name>DSLSak Domain Example Insurance Policy Application</name>
     <packaging>jar</packaging>
-
+    
     <dependencies>
-
+        
         <!-- Core Module -->
         <dependency>
             <groupId>se.lf.dslsak.domain</groupId>
             <artifactId>dslsak-domain-example-insurance-policy-core</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
         </dependency>
-
+        
         <!-- Spring Dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
-
+        
         <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-
+        
         <!-- Test Dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
+        
         <!-- Add validation starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
+        
+        <!-- Add platform exception framework -->
+        <dependency>
+            <groupId>se.lf.dslsak.platform</groupId>
+            <artifactId>dslsak-platform-core-exception</artifactId>
+            <version>${dslsak.platform.version}</version>
+        </dependency>
+        
+        <!-- Web Dependency -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>3.2.3</version>
+        </dependency>
+        
+        <!-- Platform Dependencies -->
+        <dependency>
+            <groupId>se.lf.dslsak.platform</groupId>
+            <artifactId>dslsak-platform-core-exception</artifactId>
+            <version>${dslsak.platform.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>se.lf.dslsak.platform</groupId>
+            <artifactId>dslsak-platform-core-observability</artifactId>
+            <version>${dslsak.platform.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>se.lf.dslsak.platform</groupId>
+            <artifactId>dslsak-platform-core-cache</artifactId>
+            <version>${dslsak.platform.version}</version>
+        </dependency>
+        
     </dependencies>
-
+    
     <build>
         <plugins>
             <plugin>

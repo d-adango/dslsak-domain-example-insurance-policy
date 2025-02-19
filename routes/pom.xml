@@ -7,10 +7,14 @@
         <artifactId>dslsak-domain-example-insurance-policy</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-
+    
     <artifactId>dslsak-domain-example-insurance-policy-routes</artifactId>
     <name>DSLSak Domain Example Insurance Policy Routes</name>
-
+    
+    <properties>
+        <dslsak.platform.version>1.0.0-SNAPSHOT</dslsak.platform.version>
+    </properties>
+    
     <dependencies>
         <!-- Module Dependencies -->
         <dependency>
@@ -27,7 +31,12 @@
             <groupId>se.lf.dslsak.domain</groupId>
             <artifactId>dslsak-domain-example-insurance-policy-infrastructure</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>se.lf.dslsak.domain</groupId>
+            <artifactId>dslsak-domain-example-insurance-policy-model</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        
         <!-- Camel Dependencies -->
         <dependency>
             <groupId>org.apache.camel.springboot</groupId>
@@ -49,14 +58,14 @@
             <groupId>org.apache.camel.springboot</groupId>
             <artifactId>camel-openapi-java-starter</artifactId>
         </dependency>
-
+        
         <!-- Lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-
+        
         <!-- Test Dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -68,22 +77,56 @@
             <artifactId>camel-test-spring-junit5</artifactId>
             <scope>test</scope>
         </dependency>
-
+        
         <!-- Spring Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <version>3.2.3</version>
         </dependency>
-
+        
         <!-- Platform Observability -->
         <dependency>
-            <groupId>se.lf.dslsak.platform.core</groupId>
+            <groupId>se.lf.dslsak.platform</groupId>
             <artifactId>dslsak-platform-core-observability</artifactId>
             <version>${dslsak.platform.version}</version>
         </dependency>
-    </dependencies>
+        
+        <!-- javax.annotation -->
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+        
+        <!-- Platform Exception Handler -->
+        <dependency>
+            <groupId>se.lf.dslsak.platform</groupId>
+            <artifactId>dslsak-platform-core-exception</artifactId>
+            <version>${dslsak.platform.version}</version>
+        </dependency>
+        
+        <!-- Kafka Dependencies -->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        <!-- Stream Processor Core -->
+        <dependency>
+            <groupId>se.lf.dslsak.platform</groupId>
+            <artifactId>dslsak-platform-core-stream-processor</artifactId>
+            <version>${dslsak.platform.version}</version>
+        </dependency>
 
+        
+    </dependencies>
+    
     <build>
         <plugins>
             <plugin>
